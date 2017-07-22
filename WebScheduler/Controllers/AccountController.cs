@@ -71,7 +71,16 @@ namespace WebScheduler.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation(1, "User logged in.");
-                    return RedirectToLocal(returnUrl);
+                    if (await _userManager.IsInRoleAsync(user, "Admin"))
+                    {
+                        return Redirect("/Admin");
+                    }
+                    else
+                    {
+                        return Redirect("/Staff");
+                    }
+
+                    
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -123,9 +132,10 @@ namespace WebScheduler.Controllers
                     //var callbackUrl = Url.Action(nameof(ConfirmEmail), "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
+                    await _userManager.AddToRoleAsync(user, "Staff");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
-                    return RedirectToLocal(returnUrl);
+                    return Redirect("/staff");
                 }
                 AddErrors(result);
             }
