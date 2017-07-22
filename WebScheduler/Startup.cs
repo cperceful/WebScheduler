@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using WebScheduler.Data;
 using WebScheduler.Models;
 using WebScheduler.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebScheduler
 {
@@ -83,6 +84,55 @@ namespace WebScheduler
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            var serviceProvider = app.ApplicationServices.GetService<IServiceProvider>();
+            CreateRoles(serviceProvider).Wait();
+        }
+        //Create user roles
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            RoleManager<IdentityRole> RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            UserManager<ApplicationUser> UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+            string[] roleNames = { "Admin", "Staff" };
+            IdentityResult roleResult;
+
+            //check to see if roles exist
+            foreach (string roleName in roleNames)
+            {
+                bool roleExists = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExists)
+                {
+                    //create roles and add to database
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            //Create object with values for Admin account to be added
+            ApplicationUser admin = new ApplicationUser
+            {
+                UserName = Configuration["AppSettings:Username"],
+                Email = Configuration["AppSettings:UserEmail"]
+            };
+
+            //Password for admin account to be used if not already created
+            string userPassword = Configuration["AppSettings:Password"];
+            //If a user exists with declared AdminEmail in appsettings.json, store as user
+            ApplicationUser user = await UserManager.FindByEmailAsync(Configuration["AppSettings:AdminEmail"]);
+
+            //if the Admin user doesn't exists, create it with the values declared above
+            if (user == null)
+            {
+                //get the result of creating the Admin user
+                IdentityResult createAdmin = await UserManager.CreateAsync(admin, userPassword);
+                //if creation succeeded, assign Admin role
+                if (createAdmin.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(admin, "Admin");
+                    
+                }
+            }
         }
     }
+
+   
 }
