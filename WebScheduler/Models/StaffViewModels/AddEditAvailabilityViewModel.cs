@@ -16,14 +16,12 @@ namespace WebScheduler.Models.StaffViewModels
         public DayOfWeek Day { get; set; }
 
         [Required]
-        public TimeSpan StarTime { get; set; }
+        [Display(Name ="Start Time")]
+        public TimeSpan StartTime { get; set; }
 
         [Required]
+        [Display(Name = "End Time")]
         public TimeSpan EndTime { get; set; }
-
-        public List<SelectListItem> Days { get; set; }
-
-      
 
 
         
