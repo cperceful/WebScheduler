@@ -8,9 +8,10 @@ using WebScheduler.Data;
 namespace WebScheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170727235039_AddAvailabilitySet")]
+    partial class AddAvailabilitySet
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -183,12 +184,6 @@ namespace WebScheduler.Data.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int?>("AvailabilitySetID");
-
-                    b.Property<int>("DayOfWeek");
-
-                    b.Property<TimeSpan>("EndTime");
-
-                    b.Property<TimeSpan>("StartTime");
 
                     b.HasKey("ID");
 

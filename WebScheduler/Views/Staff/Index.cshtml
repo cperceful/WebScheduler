@@ -1,3 +1,5 @@
 ﻿@{ ViewBag.Title = "Staff Landing Page";}
 
-Staff
+<h1>Staff</h1>
+
+<a asp-controller="staff" asp-action="availability" asp-route-userId="@User.Identity.Name">Edit Availability</a>
