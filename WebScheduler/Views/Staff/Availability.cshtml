@@ -1,8 +1,17 @@
 ﻿@using WebScheduler.Models.StaffViewModels
+@using System.Web.MVC;
 @model AddEditAvailabilityViewModel
 
 @{ViewBag.Title = "Add/EditAvailablity";}
 
- Testing
-
 Welcome, @User.Identity.Name!
+
+@if (ViewBag.availabilities != null)
+{
+    <h1>Show this</h1>
+
+}
+
+<h3>Set Availability</h3>
+
+@Html.EnumDropDownListFor

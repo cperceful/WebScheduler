@@ -11,5 +11,6 @@ namespace WebScheduler.Models
     public class ApplicationUser : IdentityUser
     {
         public AvailabilitySet AvailabilitySet { get; set; }
+
     }
 }

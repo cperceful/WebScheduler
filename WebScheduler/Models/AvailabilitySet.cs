@@ -12,5 +12,6 @@ namespace WebScheduler.Models
         public int ID { get; set; }       
 
         public IList<Availability> Availabilities { get; set; }
+
     }
 }
