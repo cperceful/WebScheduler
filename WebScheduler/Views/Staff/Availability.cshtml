@@ -1,14 +1,31 @@
 ﻿@using WebScheduler.Models.StaffViewModels
-@using System;
+@using WebScheduler.Models
 @model AddEditAvailabilityViewModel
 
 @{ViewBag.Title = "Add/EditAvailablity";}
 
 Welcome, @User.Identity.Name!
 
-@if (ViewBag.availabilities != null)
+@if (ViewBag.availabilities.Count != 0)
 {
-    <h1>Show this</h1>
+    <h1>Availability</h1>
+    <table class="table-bordered">
+        <tr>
+            <th>Day</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+        </tr>
+
+        @foreach (Availability availability in ViewBag.availabilities)
+        {
+            <tr>
+                <td>@availability.Day</td>
+                <td>@availability.StartTime</td>
+                <td>@availability.EndTime</td>
+            </tr>
+
+        }
+    </table>
 
 }
 
@@ -27,5 +44,6 @@ Welcome, @User.Identity.Name!
         <label asp-for="EndTime"></label>
         <input class="form-control" asp-for="EndTime" type="time" max="22:00:00"/>
     </div>
+    <input type="hidden" name="userId" value="@User.Identity.Name" />
     <input type="submit" class="btn" />
 </form> 

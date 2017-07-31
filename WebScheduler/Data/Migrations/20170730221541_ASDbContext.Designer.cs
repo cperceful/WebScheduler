@@ -8,9 +8,10 @@ using WebScheduler.Data;
 namespace WebScheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170730221541_ASDbContext")]
+    partial class ASDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -180,6 +181,8 @@ namespace WebScheduler.Data.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
+                    b.Property<int?>("AvailabilitySetID");
+
                     b.Property<int>("Day");
 
                     b.Property<TimeSpan>("EndTime");
@@ -190,7 +193,24 @@ namespace WebScheduler.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("AvailabilitySet");
+                    b.HasIndex("AvailabilitySetID");
+
+                    b.ToTable("Availability");
+                });
+
+            modelBuilder.Entity("WebScheduler.Models.AvailabilitySet", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique();
+
+                    b.ToTable("AvailabilitySets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -233,8 +253,19 @@ namespace WebScheduler.Data.Migrations
             modelBuilder.Entity("WebScheduler.Models.Availability", b =>
                 {
                     b.HasOne("WebScheduler.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Availabilities")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("WebScheduler.Models.AvailabilitySet")
+                        .WithMany("Availabilities")
+                        .HasForeignKey("AvailabilitySetID");
+                });
+
+            modelBuilder.Entity("WebScheduler.Models.AvailabilitySet", b =>
+                {
+                    b.HasOne("WebScheduler.Models.ApplicationUser", "ApplicationUser")
+                        .WithOne("AvailabilitySet")
+                        .HasForeignKey("WebScheduler.Models.AvailabilitySet", "ApplicationUserId");
                 });
         }
     }

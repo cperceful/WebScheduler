@@ -8,9 +8,10 @@ using WebScheduler.Data;
 namespace WebScheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170728155236_EditAvailabilityProperty")]
+    partial class EditAvailabilityProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -130,6 +131,8 @@ namespace WebScheduler.Data.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<int?>("AvailabilitySetID");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -163,6 +166,8 @@ namespace WebScheduler.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AvailabilitySetID");
+
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
@@ -178,7 +183,7 @@ namespace WebScheduler.Data.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
+                    b.Property<int?>("AvailabilitySetID");
 
                     b.Property<int>("Day");
 
@@ -188,7 +193,17 @@ namespace WebScheduler.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("AvailabilitySetID");
+
+                    b.ToTable("Availability");
+                });
+
+            modelBuilder.Entity("WebScheduler.Models.AvailabilitySet", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.HasKey("ID");
 
                     b.ToTable("AvailabilitySet");
                 });
@@ -230,11 +245,18 @@ namespace WebScheduler.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WebScheduler.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("WebScheduler.Models.AvailabilitySet", "AvailabilitySet")
+                        .WithMany()
+                        .HasForeignKey("AvailabilitySetID");
+                });
+
             modelBuilder.Entity("WebScheduler.Models.Availability", b =>
                 {
-                    b.HasOne("WebScheduler.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("WebScheduler.Models.AvailabilitySet")
                         .WithMany("Availabilities")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("AvailabilitySetID");
                 });
         }
     }

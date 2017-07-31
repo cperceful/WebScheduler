@@ -8,9 +8,10 @@ using WebScheduler.Data;
 namespace WebScheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170728192233_AppUserToAvailability")]
+    partial class AppUserToAvailability
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -190,7 +191,7 @@ namespace WebScheduler.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("AvailabilitySet");
+                    b.ToTable("Availability");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
