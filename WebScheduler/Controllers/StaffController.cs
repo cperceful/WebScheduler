@@ -70,6 +70,18 @@ namespace WebScheduler.Controllers
 
             
             return Redirect("/staff/availability");
+     
+        }
+
+        [HttpGet]
+        public IActionResult RequestOff()
+        {
+            AddEditRequestOffViewModel model = new AddEditRequestOffViewModel();
+
+            IList<RequestOff> requestsOff = context.RequestsOff.Include(x => x.ApplicationUser).Where(x => x.ApplicationUserId == userManager.GetUserId(User)).ToList();
+            ViewBag.requestsOff = requestsOff;
+
+            return View(model);
         }
 
 

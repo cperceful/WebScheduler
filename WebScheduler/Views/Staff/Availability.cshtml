@@ -38,11 +38,11 @@ Welcome, @User.Identity.Name!
     </div>
     <div class="form-group">
         <label asp-for="StartTime"></label>
-        <input class="form-control" asp-for="StartTime" type="time" min="10:00:00" />
+        <input class="form-control" asp-for="StartTime" type="time" min="10:00:00" max="22:00:00" />
     </div>
     <div class="form-group">
         <label asp-for="EndTime"></label>
-        <input class="form-control" asp-for="EndTime" type="time" max="22:00:00"/>
+        <input class="form-control" asp-for="EndTime" type="time" min="10:00:00" max="22:00:00"/>
     </div>
     <input type="submit" class="btn" />
 </form> 

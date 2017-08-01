@@ -1,0 +1,58 @@
+﻿@using WebScheduler.Models
+@using WebScheduler.Models.StaffViewModels
+@model AddEditRequestOffViewModel
+
+@{ ViewBag.Title = "Request Off"; }
+
+<h1>Request Off</h1>
+
+@if (ViewBag.requestsOff.Count > 0)
+{
+    <h3>Current Requests Off</h3>
+    <table class="table-bordered">
+        <tr>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Notes</th>
+        </tr>
+
+        @foreach (RequestOff requestOff in ViewBag.requestsOff)
+        {
+            <tr>
+                <td>@requestOff.Date.DayOfWeek @requestOff.Date.Date</td>
+                <td>@requestOff.StartTime</td>
+                <td>@requestOff.EndTime</td>
+                <td>@requestOff.Notes</td>
+            </tr>         
+
+        }
+    </table>
+
+}
+
+<h3>Make Request Off</h3>
+
+<form asp-controller="staff" asp-action="requestoff" method="post">
+    <div class="form-group">
+        <label asp-for="Date"></label>
+        <input class="form-control" asp-for="Date" type="date" value="@DateTime.Now.Date"/>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="StartTime"></label>
+        <input class="form-control" asp-for="StartTime" type="time" min="10:00:00" max="22:00:00" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EndTime"></label>
+        <input class="form-control" asp-for="EndTime" type="time" min="10:00:00" max="22:00:00" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Notes"></label>
+        <textarea class="form-control" asp-for="Notes"></textarea>
+    </div>
+    <input type="submit" class="btn" />
+
+</form>
+
