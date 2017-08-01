@@ -12,5 +12,7 @@ namespace WebScheduler.Models
     {
         public IList<Availability> Availabilities { get; set; }
 
+        public IList<RequestOff> RequestsOff { get; set; }
+
     }
 }

@@ -66,9 +66,7 @@ namespace WebScheduler.Controllers
             };
 
             context.AvailabilitySet.Add(newAvailability);
-            context.SaveChanges();
-
-            
+            context.SaveChanges();          
 
             
             return Redirect($"/staff/availability/{userName}");
