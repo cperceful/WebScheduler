@@ -37,7 +37,7 @@ namespace WebScheduler.Controllers
 
         //Availablility add/edit screen. URL should be /staff/availability/{userName}
         [HttpGet]        
-        public IActionResult Availability(string userName)
+        public IActionResult Availability()
         {
             IList<Availability> availabilities = context.AvailabilitySet.Include(x => x.ApplicationUser).Where(x => x.ApplicationUserId == userManager.GetUserId(User)).ToList();
             ViewBag.availabilities = availabilities;
@@ -47,7 +47,7 @@ namespace WebScheduler.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Availability(AddEditAvailabilityViewModel model, string userName)
+        public async Task<IActionResult> Availability(AddEditAvailabilityViewModel model)
         {
             ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
             
@@ -69,7 +69,9 @@ namespace WebScheduler.Controllers
             context.SaveChanges();          
 
             
-            return Redirect($"/staff/availability/{userName}");
+            return Redirect("/staff/availability");
         }
+
+
     }
 }
