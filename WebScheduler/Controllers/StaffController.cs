@@ -84,6 +84,32 @@ namespace WebScheduler.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> RequestOff(AddEditRequestOffViewModel model)
+        {
+            ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            RequestOff requestOff = new RequestOff
+            {
+                Date = model.Date,
+                StartTime = model.StartTime,
+                EndTime = model.EndTime,
+                Notes = model.Notes,
+                ApplicationUser = user
+
+            };
+
+            context.RequestsOff.Add(requestOff);
+            context.SaveChanges();
+
+            return Redirect("/staff/requestoff");
+        }
+
 
     }
 }

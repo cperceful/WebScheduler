@@ -14,9 +14,9 @@ namespace WebScheduler.Models.StaffViewModels
         public string Notes { get; set; }
 
         [Required]
-        public DateTime StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
 
         [Required]
-        public DateTime EndTime { get; set; }
+        public TimeSpan EndTime { get; set; }
     }
 }
