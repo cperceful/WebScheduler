@@ -18,12 +18,12 @@ namespace WebScheduler.Controllers
     {
         //UserManager object for accessing user store
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<ApplicationRole> roleManager;
+        
 
-        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+        public AdminController(UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
-            this.roleManager = roleManager;
+            
         }
 
         // GET: /<controller>/
@@ -36,6 +36,13 @@ namespace WebScheduler.Controllers
         {
             IList<ApplicationUser> users = userManager.Users.Include(x => x.Availabilities).Where(x => x.UserName != "Admin").ToList();
             
+            return View(users);
+        }
+
+        public IActionResult RequestsOff()
+        {
+            IList<ApplicationUser> users = userManager.Users.Include(x => x.RequestsOff).ToList();
+
             return View(users);
         }
     }
