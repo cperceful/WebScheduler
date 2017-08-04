@@ -1,0 +1,31 @@
+﻿@using WebScheduler.Models
+@model IList<ApplicationUser>
+
+@{ ViewBag.Title = "Staff Availability";}
+
+<h1>@ViewBag.Title</h1>
+
+@foreach (ApplicationUser user in Model)
+{
+    
+    <table class="table-bordered">
+        <caption>@user.UserName</caption>
+        <tr>
+            <th>Day</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+        </tr>
+
+        @foreach (Availability availability in user.Availabilities)
+        {
+            
+            <tr>
+                <td>@availability.Day</td>
+                <td>@availability.StartTime</td>
+                <td>@availability.EndTime</td>
+            </tr>
+
+        }
+    </table>
+
+}
