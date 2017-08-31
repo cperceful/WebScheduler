@@ -10,8 +10,6 @@ namespace WebScheduler.Validation
     public class Sunday : ValidationAttribute
     {
 
-        private DayOfWeek dayOfWeek;
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             CreateScheduleViewModel model = (CreateScheduleViewModel)validationContext.ObjectInstance;

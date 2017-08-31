@@ -9,6 +9,7 @@ using WebScheduler.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using WebScheduler.Models.AdminViewModels;
+using WebScheduler.Data;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,12 +20,13 @@ namespace WebScheduler.Controllers
     {
         //UserManager object for accessing user store
         private readonly UserManager<ApplicationUser> userManager;
-        
 
-        public AdminController(UserManager<ApplicationUser> userManager)
+        private ApplicationDbContext context;        
+
+        public AdminController(UserManager<ApplicationUser> userManager, ApplicationDbContext dBContext)
         {
             this.userManager = userManager;
-            
+            context = dBContext;            
         }
 
         // GET: /<controller>/
@@ -61,6 +63,13 @@ namespace WebScheduler.Controllers
             {
                 return View(model);
             }
+            Schedule newSchedule = new Schedule
+            {
+                StartDate = model.StartDate
+            };
+
+            context.Schedules.Add(newSchedule);
+            context.SaveChanges();
             return View();
         }
     }
