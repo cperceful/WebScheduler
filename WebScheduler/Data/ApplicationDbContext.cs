@@ -26,5 +26,6 @@ namespace WebScheduler.Data
         public DbSet<Availability> AvailabilitySet { get; set; }
 
         public DbSet<RequestOff> RequestsOff { get; set; }
+
     }
 }

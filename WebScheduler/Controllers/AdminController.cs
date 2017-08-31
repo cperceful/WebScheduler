@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using WebScheduler.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using WebScheduler.Models.AdminViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,6 +45,23 @@ namespace WebScheduler.Controllers
             IList<ApplicationUser> users = userManager.Users.Include(x => x.RequestsOff).ToList();
 
             return View(users);
+        }
+
+        [HttpGet]
+        public IActionResult CreateSchedule()
+        {
+            CreateScheduleViewModel model = new CreateScheduleViewModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateSchedule(CreateScheduleViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            return View();
         }
     }
 }

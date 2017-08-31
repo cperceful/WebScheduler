@@ -8,9 +8,10 @@ using WebScheduler.Data;
 namespace WebScheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170818213235_AddName")]
+    partial class AddName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -217,6 +218,26 @@ namespace WebScheduler.Data.Migrations
                     b.ToTable("RequestsOff");
                 });
 
+            modelBuilder.Entity("WebScheduler.Models.Shift", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<int>("Day");
+
+                    b.Property<TimeSpan>("EndTime");
+
+                    b.Property<TimeSpan>("StartTime");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("Schedules");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
@@ -265,6 +286,13 @@ namespace WebScheduler.Data.Migrations
                 {
                     b.HasOne("WebScheduler.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("RequestsOff")
+                        .HasForeignKey("ApplicationUserId");
+                });
+
+            modelBuilder.Entity("WebScheduler.Models.Shift", b =>
+                {
+                    b.HasOne("WebScheduler.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserId");
                 });
         }

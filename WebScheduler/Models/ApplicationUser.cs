@@ -14,5 +14,7 @@ namespace WebScheduler.Models
 
         public IList<RequestOff> RequestsOff { get; set; }
 
+        public string Name { get; set; }
+
     }
 }
