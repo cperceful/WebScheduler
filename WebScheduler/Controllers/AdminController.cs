@@ -70,7 +70,23 @@ namespace WebScheduler.Controllers
 
             context.Schedules.Add(newSchedule);
             context.SaveChanges();
-            return View();
+
+            return Redirect($"/admin/editschedule/{newSchedule.ID}");
+        }
+
+        [HttpGet]
+        [Route("admin/editschedule/{id}")]
+        public IActionResult EditSchedule(int id)
+        {
+            Schedule schedule = context.Schedules.Single(x => x.ID == id);
+            EditScheduleViewModel model = new EditScheduleViewModel
+            {
+                StartDate = schedule.StartDate,
+                id = schedule.ID
+            };
+
+            //TODO: build view for editing schedule
+            return View(model);
         }
     }
 }
