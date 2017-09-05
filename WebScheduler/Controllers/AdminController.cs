@@ -88,5 +88,11 @@ namespace WebScheduler.Controllers
             //TODO: build view for editing schedule
             return View(model);
         }
+
+        public IActionResult ViewSchedules()
+        {
+            IList<Schedule> schedules = context.Schedules.ToList();
+            return View(schedules);
+        }
     }
 }
