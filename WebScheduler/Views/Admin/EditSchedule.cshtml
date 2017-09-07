@@ -1,6 +1,36 @@
 ﻿@using WebScheduler.Models.AdminViewModels
-@model EditScheduleViewModel
+@using WebScheduler.Models
+@model AddEditShiftViewModel
 
-@{ ViewBag.Title = $"Edit Schedule {Model.id}";}
+@{ ViewBag.Title = $"Edit Schedule {ViewBag.schedule.ID}";}
 
 <h1>@ViewBag.Title</h1>
+
+
+<div class="container">
+    <table class="table-bordered">
+        <thead>
+            <tr>
+                <th>Cashier</th>
+                @foreach (string day in Enum.GetNames(typeof(DayOfWeek)))
+                {
+                    <th scope="col">@day</th>
+
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(ApplicationUser user in ViewBag.users)
+            {
+                <tr>
+                    <td>@user.Name</td>
+                    <td>@user.GetShift(DayOfWeek.Sunday, ViewBag.schedule.ID)</td>
+                    
+                </tr>
+
+                        }
+        </tbody>
+
+    </table>
+</div>
+

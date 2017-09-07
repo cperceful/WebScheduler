@@ -28,5 +28,7 @@ namespace WebScheduler.Data
         public DbSet<RequestOff> RequestsOff { get; set; }
 
         public DbSet<Schedule> Schedules { get; set; }
+
+        public DbSet<Shift> Shifts { get; set; }
     }
 }

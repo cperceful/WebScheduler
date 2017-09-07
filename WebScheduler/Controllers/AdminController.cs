@@ -78,12 +78,12 @@ namespace WebScheduler.Controllers
         [Route("admin/editschedule/{id}")]
         public IActionResult EditSchedule(int id)
         {
-            Schedule schedule = context.Schedules.Single(x => x.ID == id);
-            EditScheduleViewModel model = new EditScheduleViewModel
-            {
-                StartDate = schedule.StartDate,
-                id = schedule.ID
-            };
+            Schedule schedule = context.Schedules.Include(x => x.Shifts).Single(x => x.ID == id);
+            ViewBag.schedule = schedule;
+
+            ViewBag.users = context.Users.ToList();
+
+            AddEditShiftViewModel model = new AddEditShiftViewModel();            
 
             //TODO: build view for editing schedule
             return View(model);

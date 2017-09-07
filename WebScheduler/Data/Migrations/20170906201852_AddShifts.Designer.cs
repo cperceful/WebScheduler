@@ -8,9 +8,10 @@ using WebScheduler.Data;
 namespace WebScheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170906201852_AddShifts")]
+    partial class AddShifts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -307,7 +308,7 @@ namespace WebScheduler.Data.Migrations
             modelBuilder.Entity("WebScheduler.Models.Shift", b =>
                 {
                     b.HasOne("WebScheduler.Models.ApplicationUser", "User")
-                        .WithMany("Shifts")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("WebScheduler.Models.Schedule", "Schedule")
