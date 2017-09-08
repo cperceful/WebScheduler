@@ -17,8 +17,7 @@ namespace WebScheduler.Models
 
         public string Name { get; set; }
 
-        [DefaultValue("--")]
-        public IEnumerable<Shift> Shifts { get; set; }
+        public IList<Shift> Shifts { get; set; }
 
         public string GetShift(DayOfWeek day, int id)
         {
@@ -26,8 +25,8 @@ namespace WebScheduler.Models
 
             try
             {
-                shift = Shifts.Single(x => x.Day == day && x.ID == id).ToString();
-            } catch (ArgumentNullException)
+                shift = Shifts.Single(x => x.Day == day && x.ScheduleID == id).ToString();
+            } catch (Exception ex) when (ex is ArgumentNullException || ex is InvalidOperationException)
             {
                 shift = "--";
             }

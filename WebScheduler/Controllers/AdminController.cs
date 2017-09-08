@@ -81,12 +81,40 @@ namespace WebScheduler.Controllers
             Schedule schedule = context.Schedules.Include(x => x.Shifts).Single(x => x.ID == id);
             ViewBag.schedule = schedule;
 
-            ViewBag.users = context.Users.ToList();
+            IEnumerable<ApplicationUser> users = context.Users.ToList();
+            ViewBag.users = users;
 
-            AddEditShiftViewModel model = new AddEditShiftViewModel();            
+            AddEditShiftViewModel model = new AddEditShiftViewModel(users);            
 
             //TODO: build view for editing schedule
             return View(model);
+        }
+
+        [HttpPost]
+        [Route("admin/editschedule/{id}")]
+        public async Task<IActionResult> EditSchedule(AddEditShiftViewModel model, int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                Schedule schedule = context.Schedules.Include(x => x.Shifts).Single(x => x.ID == id);
+                ViewBag.schedule = schedule;
+                return View(model);
+            }
+
+
+            Shift newShift = new Shift
+            {
+                User = await userManager.FindByIdAsync(model.UserId),
+                Day = model.Day,
+                StartTime = model.StartTime,
+                EndTime = model.EndTime,
+                Schedule = context.Schedules.Single(x => x.ID == id)
+                
+            };
+
+            context.Shifts.Add(newShift);
+            context.SaveChanges();
+            return Redirect($"/admin/editschedule/{id}");
         }
 
         public IActionResult ViewSchedules()
