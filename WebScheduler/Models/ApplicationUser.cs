@@ -19,6 +19,8 @@ namespace WebScheduler.Models
 
         public IList<Shift> Shifts { get; set; }
 
+        public bool IsActive { get; set; }
+
         public string GetShift(DayOfWeek day, int id)
         {
             string shift;

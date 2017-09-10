@@ -31,11 +31,13 @@ namespace WebScheduler.Models.AdminViewModels
 
             foreach (ApplicationUser user in users)
             {
-                Users.Add(new SelectListItem
-                {
-                    Value = user.Id,
-                    Text = (user.Name).ToString()
-                });
+                if (user.IsActive) { 
+                    Users.Add(new SelectListItem
+                    {
+                        Value = user.Id,
+                        Text = (user.Name).ToString()
+                    });
+                }
             }
 
         }

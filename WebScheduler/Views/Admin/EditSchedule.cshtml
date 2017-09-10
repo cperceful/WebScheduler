@@ -22,19 +22,21 @@
         <tbody>
             @foreach(ApplicationUser user in ViewBag.users)
             {
-                <tr>
-                    <td>@user.Name</td>
-                    <td>@user.GetShift(DayOfWeek.Sunday, ViewBag.schedule.ID)</td>
-                    <td>@user.GetShift(DayOfWeek.Monday, ViewBag.schedule.ID)</td>
-                    <td>@user.GetShift(DayOfWeek.Tuesday, ViewBag.schedule.ID)</td>
-                    <td>@user.GetShift(DayOfWeek.Wednesday, ViewBag.schedule.ID)</td>
-                    <td>@user.GetShift(DayOfWeek.Thursday, ViewBag.schedule.ID)</td>
-                    <td>@user.GetShift(DayOfWeek.Friday, ViewBag.schedule.ID)</td>
-                    <td>@user.GetShift(DayOfWeek.Saturday, ViewBag.schedule.ID)</td>
+                if (user.IsActive)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.GetShift(DayOfWeek.Sunday, ViewBag.schedule.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Monday, ViewBag.schedule.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Tuesday, ViewBag.schedule.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Wednesday, ViewBag.schedule.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Thursday, ViewBag.schedule.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Friday, ViewBag.schedule.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Saturday, ViewBag.schedule.ID)</td>
                     
-                </tr>
-
-                        }
+                    </tr>
+                }
+            }
         </tbody>
 
     </table>
