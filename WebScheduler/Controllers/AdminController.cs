@@ -119,8 +119,14 @@ namespace WebScheduler.Controllers
 
         public IActionResult ViewSchedules()
         {
-            IList<Schedule> schedules = context.Schedules.ToList();
+            IList<Schedule> schedules = context.Schedules.OrderByDescending(x => x.StartDate).ToList();
             return View(schedules);
+        }
+
+        [HttpGet]
+        public IActionResult ManageStaff()
+        {
+            return View();
         }
     }
 }
