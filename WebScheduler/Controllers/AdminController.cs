@@ -126,7 +126,8 @@ namespace WebScheduler.Controllers
         [HttpGet]
         public IActionResult ManageStaff()
         {
-            return View();
+            IEnumerable<ApplicationUser> users = context.Users.ToList();
+            return View(users);
         }
     }
 }

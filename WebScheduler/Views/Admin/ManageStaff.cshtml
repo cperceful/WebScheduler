@@ -1,0 +1,47 @@
+﻿@using WebScheduler.Models
+@model IEnumerable<ApplicationUser>
+
+@{ ViewBag.Title = "Manage Staff";}
+
+<style>
+    .list-group{
+        display:inline-table;
+
+    }
+</style>
+
+<h1>@ViewBag.Title</h1>
+
+<div class="list-group">
+    <label for="activestaff">Active Staff</label>
+    
+    @foreach (ApplicationUser user in Model)
+    {
+        if (user.IsActive)
+        {
+            <div>
+                <a class="list-group-item" href="#">@user.Name</a>
+                <a asp-controller="admin" asp-action="deactivate" asp-route-id="@user.Id">Deactivate</a>
+            </div>
+
+        }
+
+    }
+ 
+</div>
+<br />
+
+<div class="list-group">
+    <label for="inactivestaff">Inactive Staff</label>
+    <ol class="list-inline" name="inactivestaff">
+        @foreach (ApplicationUser user in Model)
+        {
+            if (!user.IsActive)
+            {
+                <li class="list-group-item">@user.Name</li>
+
+            }
+
+        }
+    </ol>
+</div>
