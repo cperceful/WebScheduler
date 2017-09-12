@@ -129,5 +129,26 @@ namespace WebScheduler.Controllers
             IEnumerable<ApplicationUser> users = context.Users.ToList();
             return View(users);
         }
+
+        [HttpPost]
+        [Route("admin/deactivate/{id}")]
+        public IActionResult Deactivate(string id)
+        {
+            ApplicationUser user = context.Users.Single(x => x.Id == id);
+            user.IsActive = false;
+            context.SaveChanges();
+
+            return RedirectToAction("ManageStaff");
+        }
+
+        [HttpPost]
+        [Route("admin/activate{id}")]
+        public IActionResult Activate(string id)
+        {
+            ApplicationUser user = context.Users.Single(x => x.Id == id);
+            user.IsActive = true;
+            context.SaveChanges();
+            return RedirectToAction("ManageStaff");
+        }
     }
 }

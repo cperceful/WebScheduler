@@ -13,15 +13,17 @@
 <h1>@ViewBag.Title</h1>
 
 <div class="list-group">
-    <label for="activestaff">Active Staff</label>
+    <label>Active Staff</label>
     
     @foreach (ApplicationUser user in Model)
     {
         if (user.IsActive)
         {
-            <div>
-                <a class="list-group-item" href="#">@user.Name</a>
-                <a asp-controller="admin" asp-action="deactivate" asp-route-id="@user.Id">Deactivate</a>
+            <div class="form-inline">
+                <form method="post" asp-controller="admin" asp-action="deactivate" asp-route-id="@user.Id">
+                    <a class="list-group-item" href="/#">@user.Name</a>
+                    <button type="submit" class="btn">Deactivate</button>
+                </form>
             </div>
 
         }
@@ -32,16 +34,20 @@
 <br />
 
 <div class="list-group">
-    <label for="inactivestaff">Inactive Staff</label>
-    <ol class="list-inline" name="inactivestaff">
-        @foreach (ApplicationUser user in Model)
+    <label>Inactive Staff</label>
+    @foreach (ApplicationUser user in Model)
+    {
+        if (!user.IsActive)
         {
-            if (!user.IsActive)
-            {
-                <li class="list-group-item">@user.Name</li>
-
-            }
+            <div class="form-inline">
+                <form method="post" asp-controller="admin" asp-action="activate" asp-route-id="@user.Id">
+                    <a class="list-group-item" href="/#">@user.Name</a>
+                    <button type="submit" class="btn">Activate</button>
+                </form>
+            </div>
 
         }
-    </ol>
+
+    }
+    
 </div>
