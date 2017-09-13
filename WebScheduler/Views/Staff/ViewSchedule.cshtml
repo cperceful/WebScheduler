@@ -1,0 +1,39 @@
+﻿@using WebScheduler.Models
+@model Schedule
+@{ ViewBag.Title = $"Viewing Schedule for {Model.StartDate.Month}/{Model.StartDate.Day}/{Model.StartDate.Year}";}
+
+<h1>@ViewBag.Title</h1>
+<div class="container">
+    <table class="table-bordered">
+        <thead>
+            <tr>
+                <th>Cashier</th>
+                @foreach (string day in Enum.GetNames(typeof(DayOfWeek)))
+                {
+                    <th>@day</th>
+
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ApplicationUser user in ViewBag.users)
+            {
+                if (user.IsActive)
+                {
+                    <tr>
+                        <td>@user.Name</td>
+                        <td>@user.GetShift(DayOfWeek.Sunday, Model.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Monday, Model.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Tuesday, Model.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Wednesday, Model.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Thursday, Model.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Friday, Model.ID)</td>
+                        <td>@user.GetShift(DayOfWeek.Saturday, Model.ID)</td>
+
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+</div>

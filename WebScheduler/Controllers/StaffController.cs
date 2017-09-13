@@ -35,7 +35,6 @@ namespace WebScheduler.Controllers
             return View();
         }
 
-        //Availablility add/edit screen. URL should be /staff/availability/{userName}
         [HttpGet]        
         public IActionResult Availability()
         {
@@ -108,6 +107,20 @@ namespace WebScheduler.Controllers
             context.SaveChanges();
 
             return Redirect("/staff/requestoff");
+        }
+
+        public IActionResult Schedules()
+        {
+            IList<Schedule> schedules = context.Schedules.OrderByDescending(x => x.StartDate).ToList();
+            return View(schedules);
+        }
+
+        [Route("staff/viewschedule/{id}")]
+        public IActionResult ViewSchedule(int id)
+        {
+            Schedule schedule = context.Schedules.Include(x => x.Shifts).Single(x => x.ID == id);
+            ViewBag.users = context.Users.ToList();
+            return View(schedule);
         }
 
 

@@ -1,0 +1,12 @@
+﻿@using WebScheduler.Models
+@model IList<Schedule>
+
+@{ ViewBag.Title = "Schedule List";}
+
+<h1>@ViewBag.Title</h1>
+
+@foreach (Schedule schedule in Model)
+{
+    <a asp-controller="staff" asp-action="viewschedule" asp-route-id="@schedule.ID">@schedule.StartDate.Month/@schedule.StartDate.Day/@schedule.StartDate.Year</a>
+    <br />
+}
