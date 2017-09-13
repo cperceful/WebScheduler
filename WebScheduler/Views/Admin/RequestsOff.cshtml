@@ -20,8 +20,8 @@
         {
             <tr>
                 <td>@requestOff.Date.Month/@requestOff.Date.Day</td>
-                <td>@requestOff.StartTime</td>
-                <td>@requestOff.EndTime</td>
+                <td>@requestOff.StartTime.ToString("hh:mm tt")</td>
+                <td>@requestOff.EndTime.ToString("hh:mm tt")</td>
                 <td>@requestOff.Notes</td>
             </tr>
 

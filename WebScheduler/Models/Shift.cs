@@ -16,16 +16,16 @@ namespace WebScheduler.Models
 
         public DayOfWeek Day { get; set; }
 
-        public TimeSpan StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
-        public TimeSpan EndTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         public Schedule Schedule { get; set; }
         public int ScheduleID { get; set; }
 
         public override string ToString()
         {
-            return $"{StartTime} - {EndTime}";
+            return $"{StartTime.ToString("hh:mm tt")} - {EndTime.ToString("hh:mm tt")}";
         }
 
 

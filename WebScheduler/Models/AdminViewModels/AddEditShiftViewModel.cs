@@ -16,10 +16,10 @@ namespace WebScheduler.Models.AdminViewModels
         public DayOfWeek Day { get; set; }
 
         [Required]
-        public TimeSpan StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         [Required]
-        public TimeSpan EndTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         public int ScheduleId { get; set; }
 

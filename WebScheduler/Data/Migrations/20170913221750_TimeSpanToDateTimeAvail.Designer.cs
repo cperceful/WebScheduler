@@ -8,9 +8,10 @@ using WebScheduler.Data;
 namespace WebScheduler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170913221750_TimeSpanToDateTimeAvail")]
+    partial class TimeSpanToDateTimeAvail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -206,11 +207,11 @@ namespace WebScheduler.Data.Migrations
 
                     b.Property<DateTime>("Date");
 
-                    b.Property<DateTime>("EndTime");
+                    b.Property<TimeSpan>("EndTime");
 
                     b.Property<string>("Notes");
 
-                    b.Property<DateTime>("StartTime");
+                    b.Property<TimeSpan>("StartTime");
 
                     b.HasKey("ID");
 
@@ -240,11 +241,11 @@ namespace WebScheduler.Data.Migrations
 
                     b.Property<int>("Day");
 
-                    b.Property<DateTime>("EndTime");
+                    b.Property<TimeSpan>("EndTime");
 
                     b.Property<int>("ScheduleID");
 
-                    b.Property<DateTime>("StartTime");
+                    b.Property<TimeSpan>("StartTime");
 
                     b.HasKey("ID");
 

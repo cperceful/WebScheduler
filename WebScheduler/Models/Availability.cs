@@ -11,9 +11,9 @@ namespace WebScheduler.Models
 
         public DayOfWeek Day { get; set; }
 
-        public TimeSpan StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
-        public TimeSpan EndTime { get; set; }
+        public DateTime EndTime { get; set; }
 
         public ApplicationUser ApplicationUser { get; set; }
         public string ApplicationUserId { get; set; }
