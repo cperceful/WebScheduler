@@ -7,5 +7,6 @@
 
 @foreach (Schedule schedule in Model)
 {
-    <a asp-controller ="admin" asp-action="editschedule" asp-route-id="@schedule.ID">@schedule.StartDate</a>
+    <a asp-controller ="admin" asp-action="editschedule" asp-route-id="@schedule.ID">@schedule.StartDate.Month/@schedule.StartDate.Day/@schedule.StartDate.Year</a>
+    <br />
 }
