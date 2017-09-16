@@ -52,13 +52,14 @@ namespace WebScheduler.Controllers
         [HttpGet]
         public IActionResult CreateSchedule()
         {
-            CreateScheduleViewModel model = new CreateScheduleViewModel();
-            return View(model);
+            CreateScheduleViewModel model = new CreateScheduleViewModel(context.Schedules.ToList());     
+            return View();
         }
 
         [HttpPost]
         public IActionResult CreateSchedule(CreateScheduleViewModel model)
         {
+            
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -82,9 +83,10 @@ namespace WebScheduler.Controllers
             ViewBag.schedule = schedule;
 
             IEnumerable<ApplicationUser> users = context.Users.ToList();
+            IEnumerable<Shift> shifts = context.Shifts.ToList();
             ViewBag.users = users;
 
-            AddEditShiftViewModel model = new AddEditShiftViewModel(users);            
+            AddEditShiftViewModel model = new AddEditShiftViewModel(users, shifts);            
 
             //TODO: build view for editing schedule
             return View(model);
@@ -142,13 +144,21 @@ namespace WebScheduler.Controllers
         }
 
         [HttpPost]
-        [Route("admin/activate{id}")]
+        [Route("admin/activate/{id}")]
         public IActionResult Activate(string id)
         {
             ApplicationUser user = context.Users.Single(x => x.Id == id);
             user.IsActive = true;
             context.SaveChanges();
             return RedirectToAction("ManageStaff");
+        }
+
+        [HttpGet]
+        [Route("admin/delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            Schedule schedule = context.Schedules.Single(x => x.ID == id);
+            return View(schedule);
         }
     }
 }

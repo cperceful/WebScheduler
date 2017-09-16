@@ -11,6 +11,7 @@ namespace WebScheduler.Models.AdminViewModels
     {
         [Required]
         public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
 
         [Required]
         public DayOfWeek Day { get; set; }
@@ -25,9 +26,12 @@ namespace WebScheduler.Models.AdminViewModels
 
         public List<SelectListItem> Users { get; set; }
 
-        public AddEditShiftViewModel(IEnumerable<ApplicationUser> users)
+        public List<Shift> Shifts { get; set; }
+
+        public AddEditShiftViewModel(IEnumerable<ApplicationUser> users, IEnumerable<Shift> shifts)
         {
             Users = new List<SelectListItem>();
+            Shifts = new List<Shift>(shifts);
 
             foreach (ApplicationUser user in users)
             {
@@ -40,8 +44,12 @@ namespace WebScheduler.Models.AdminViewModels
                 }
             }
 
+
+
         }
 
         public AddEditShiftViewModel() { }
+
+        
     }
 }
