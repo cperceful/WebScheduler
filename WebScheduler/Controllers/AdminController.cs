@@ -160,5 +160,17 @@ namespace WebScheduler.Controllers
             Schedule schedule = context.Schedules.Single(x => x.ID == id);
             return View(schedule);
         }
+
+        [HttpPost]
+        [Route("admin/deleteschedule/{id}")]
+        public IActionResult DeleteSchedule(int id)
+        {
+            Schedule schedule = context.Schedules.Single(x => x.ID == id);
+            context.Shifts.RemoveRange(context.Shifts.Where(x => x.ScheduleID == id));
+            context.Schedules.Remove(schedule);
+            context.SaveChanges();
+
+            return RedirectToAction("viewschedules");
+        }
     }
 }

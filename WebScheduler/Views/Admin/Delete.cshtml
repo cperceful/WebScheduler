@@ -6,7 +6,7 @@
 <h1>@ViewBag.Title</h1>
 
 <h2>Are you sure you want to delete? This action cannot be undone</h2>
-<form method="post" asp-controller="admin" asp-action="delete" asp-route-id="@Model.ID">
+<form method="post" asp-controller="admin" asp-action="deleteschedule" asp-route-id="@Model.ID">
     <a asp-controller="admin" asp-action="viewschedules">No, get me out of here!</a>
     <br />
     <input type="submit" class="btn-danger" value="Delete" />
