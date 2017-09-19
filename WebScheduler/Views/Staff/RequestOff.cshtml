@@ -4,6 +4,10 @@
 
 @{ ViewBag.Title = "Request Off"; }
 
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"></script>
+
 <h1>Request Off</h1>
 
 @if (ViewBag.requestsOff.Count > 0)
@@ -20,7 +24,7 @@
         @foreach (RequestOff requestOff in ViewBag.requestsOff)
         {
             <tr>
-                <td>@requestOff.Date.DayOfWeek @requestOff.Date</td>
+                <td>@requestOff.Date.ToString("D")</td>
                 <td>@requestOff.StartTime.ToString("hh:mm tt")</td>
                 <td>@requestOff.EndTime.ToString("hh:mm tt")</td>
                 <td>@requestOff.Notes</td>
@@ -37,16 +41,19 @@
     <div class="form-group">
         <label asp-for="Date"></label>
         <input class="form-control" asp-for="Date" type="date" value="@DateTime.Now.Date"/>
+        <span asp-validation-for="Date" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="StartTime"></label>
-        <input class="form-control" asp-for="StartTime" type="time" min="10:00:00" max="22:00:00" />
+        <input class="form-control" asp-for="StartTime" type="time" />
+        <span asp-validation-for="StartTime" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="EndTime"></label>
-        <input class="form-control" asp-for="EndTime" type="time" min="10:00:00" max="22:00:00" />
+        <input class="form-control" asp-for="EndTime" type="time" />
+        <span asp-validation-for="EndTime" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Notes"></label>
@@ -55,4 +62,6 @@
     <input type="submit" class="btn" />
 
 </form>
+
+
 

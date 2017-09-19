@@ -30,5 +30,6 @@ namespace WebScheduler.Data
         public DbSet<Schedule> Schedules { get; set; }
 
         public DbSet<Shift> Shifts { get; set; }
+
     }
 }

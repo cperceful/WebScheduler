@@ -123,6 +123,23 @@ namespace WebScheduler.Controllers
             return View(schedule);
         }
 
+        public async Task<IActionResult> ValidateRequestOff(DateTime date)
+        {
+            return Json(await CheckRequestsOff(date) ? "true" : $"A request off for {date.ToString("D")} already exists");
+        }
+
+        private async Task<bool> CheckRequestsOff(DateTime date)
+        {
+            ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
+            foreach (RequestOff ro in context.RequestsOff.Where(x => x.ApplicationUser == user))
+            {
+                if (ro.Date.Equals(date))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
     }
 }
