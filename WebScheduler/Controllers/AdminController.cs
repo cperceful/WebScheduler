@@ -52,7 +52,7 @@ namespace WebScheduler.Controllers
         [HttpGet]
         public IActionResult CreateSchedule()
         {
-            CreateScheduleViewModel model = new CreateScheduleViewModel(context.Schedules.ToList());     
+            CreateScheduleViewModel model = new CreateScheduleViewModel();     
             return View();
         }
 
@@ -88,7 +88,7 @@ namespace WebScheduler.Controllers
 
             AddEditShiftViewModel model = new AddEditShiftViewModel(users, shifts);            
 
-            //TODO: build view for editing schedule
+            
             return View(model);
         }
 
@@ -171,6 +171,23 @@ namespace WebScheduler.Controllers
             context.SaveChanges();
 
             return RedirectToAction("viewschedules");
+        }
+
+        public IActionResult ValidateStartDate(DateTime startDate)
+        {
+            return Json(CheckDate(startDate) ? "true" : $"A schedule with the start date {startDate.ToString("D")} already exists");
+        }
+
+        private bool CheckDate(DateTime date)
+        {
+            foreach (Schedule schedule in context.Schedules.ToList())
+            {
+                if (schedule.StartDate.Equals(date))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
