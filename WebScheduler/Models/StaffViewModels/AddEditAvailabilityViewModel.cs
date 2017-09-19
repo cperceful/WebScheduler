@@ -6,13 +6,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Mvc;
 
 namespace WebScheduler.Models.StaffViewModels
 {
     public class AddEditAvailabilityViewModel
     {
         [Required]
+        [Remote("ValidateDay", "staff")]
         public DayOfWeek Day { get; set; }
 
         [Required]

@@ -141,5 +141,22 @@ namespace WebScheduler.Controllers
             return true;
         }
 
+        public async Task<IActionResult> ValidateDay(DayOfWeek day)
+        {
+            return Json(await CheckDay(day) ? "true" : $"You have already added an availability for {day.ToString()}, you should edit it");
+        }
+
+        public async Task<bool> CheckDay(DayOfWeek day)
+        {
+            ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
+            foreach (Availability availabiliy in context.AvailabilitySet.Where(x => x.ApplicationUser == user))
+            {
+                if (availabiliy.Day.Equals(day))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
