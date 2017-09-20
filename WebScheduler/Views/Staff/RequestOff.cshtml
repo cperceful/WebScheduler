@@ -27,6 +27,8 @@
                 <td>@requestOff.EndTime.ToString("hh:mm tt")</td>
                 <td>@requestOff.Notes</td>
                 <td><a asp-controller="staff" asp-action="editrequestoff" asp-route-id="@requestOff.ID">Edit</a></td>
+                <td><form asp-controller="staff" asp-action="deleterequestoff" asp-route-id="@requestOff.ID" method="post">
+                    <input type="submit" class="btn-danger" value="Delete" /></form></td>
             </tr>         
 
         }

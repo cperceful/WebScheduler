@@ -142,6 +142,16 @@ namespace WebScheduler.Controllers
             return RedirectToAction("requestoff");
         }
 
+        [HttpPost]
+        [Route("staff/deleterequestoff/{id}")]
+        public IActionResult DeleteRequestOff(int id)
+        {
+            RequestOff requestOff = context.RequestsOff.Single(x => x.ID == id);
+            context.RequestsOff.Remove(requestOff);
+            context.SaveChanges();
+            return RedirectToAction("RequestOff");
+        }
+
         public IActionResult Schedules()
         {
             IList<Schedule> schedules = context.Schedules.OrderByDescending(x => x.StartDate).ToList();
