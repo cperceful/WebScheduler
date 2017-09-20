@@ -1,6 +1,6 @@
 ﻿@using WebScheduler.Models.StaffViewModels
 @using WebScheduler.Models
-@model AddEditAvailabilityViewModel
+@model AddAvailabilityViewModel
 
 @{ViewBag.Title = "Add/EditAvailablity";}
 
@@ -22,6 +22,9 @@ Welcome, @User.Identity.Name!
                 <td>@availability.Day</td>
                 <td>@availability.StartTime.ToString("h:mm tt")</td>
                 <td>@availability.EndTime.ToString("h:mm tt")</td>
+                <td><a asp-controller="staff" asp-action="editavailability" asp-route-id="@availability.ID">Edit</a></td>
+                <td><form asp-controller="staff" asp-action="deleteavailability" asp-route-id="@availability.ID">
+                    <input type="submit" class="btn-danger" value="Delete" /></form></td>
             </tr>
 
         }

@@ -41,12 +41,12 @@ namespace WebScheduler.Controllers
             IList<Availability> availabilities = context.AvailabilitySet.Include(x => x.ApplicationUser).Where(x => x.ApplicationUserId == userManager.GetUserId(User)).ToList();
             ViewBag.availabilities = availabilities;
 
-            AddEditAvailabilityViewModel model = new AddEditAvailabilityViewModel();
+            AddAvailabilityViewModel model = new AddAvailabilityViewModel();
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Availability(AddEditAvailabilityViewModel model)
+        public async Task<IActionResult> Availability(AddAvailabilityViewModel model)
         {
             ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
             
@@ -70,6 +70,42 @@ namespace WebScheduler.Controllers
             
             return Redirect("/staff/availability");
      
+        }
+
+        [HttpGet]
+        [Route("staff/editavailability/{id}")]
+        public IActionResult EditAvailability(int id)
+        {
+            Availability availability = context.AvailabilitySet.Single(x => x.ID == id);
+            ViewBag.availability = availability;
+
+            EditAvailabilityViewModel model = new EditAvailabilityViewModel
+            {
+                StartTime = availability.StartTime,
+                EndTime = availability.EndTime
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("staff/editavailability/{id}")]
+        public IActionResult EditAvailability(int id, EditAvailabilityViewModel model)
+        {
+            Availability availability = context.AvailabilitySet.Single(x => x.ID == id);
+            availability.StartTime = model.StartTime;
+            availability.EndTime = model.EndTime;
+            context.SaveChanges();
+            return RedirectToAction("Availability");
+        }
+
+        [HttpPost]
+        [Route("staff/deleteavailability/{id}")]
+        public IActionResult DeleteAvailability(int id)
+        {
+            Availability availability = context.AvailabilitySet.Single(x => x.ID == id);
+            context.AvailabilitySet.Remove(availability);
+            context.SaveChanges();
+            return RedirectToAction("Availability");
         }
 
         [HttpGet]

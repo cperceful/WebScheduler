@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebScheduler.Models.StaffViewModels
 {
-    public class AddEditAvailabilityViewModel
+    public class AddAvailabilityViewModel
     {
         [Required]
         [Remote("ValidateDay", "staff")]
