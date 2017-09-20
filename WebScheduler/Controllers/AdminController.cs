@@ -86,7 +86,7 @@ namespace WebScheduler.Controllers
             IEnumerable<Shift> shifts = context.Shifts.ToList();
             ViewBag.users = users;
 
-            AddEditShiftViewModel model = new AddEditShiftViewModel(users, shifts);            
+            AddShiftViewModel model = new AddShiftViewModel(users, shifts, id);            
 
             
             return View(model);
@@ -94,7 +94,7 @@ namespace WebScheduler.Controllers
 
         [HttpPost]
         [Route("admin/editschedule/{id}")]
-        public async Task<IActionResult> EditSchedule(AddEditShiftViewModel model, int id)
+        public async Task<IActionResult> EditSchedule(AddShiftViewModel model, int id)
         {
             if (!ModelState.IsValid)
             {
@@ -187,6 +187,27 @@ namespace WebScheduler.Controllers
                     return false;
                 }
             }
+            return true;
+        }
+
+        public async Task<IActionResult> ValidateShiftDay(DayOfWeek day, int scheduleId)
+        {
+            ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
+            return Json(await CheckShiftDay(day, scheduleId) ? "true" : $"{user.Name} already has a shift for {day} on this schedule. Edit it if you need to change times");
+        }
+
+        public async Task<bool> CheckShiftDay(DayOfWeek day, int scheduleId)
+        {
+            ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
+
+            foreach (Shift shift in context.Shifts.Where(x => x.User == user && x.ScheduleID == scheduleId).ToList())
+            {
+                if (shift.Day.Equals(day))
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
     }

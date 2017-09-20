@@ -1,0 +1,26 @@
+﻿@using WebScheduler.Models.StaffViewModels
+@model EditRequestOffViewModel
+
+@{ ViewBag.Title = $"Edit Request Off For {ViewBag.requestOff.Date.ToString("D")}";}
+
+<h1>@ViewBag.Title</h1>
+
+<form asp-controller="staff" asp-action="editrequestoff" asp-route-id="@ViewBag.requestOff.ID" method="post">
+    <div class="form-group">
+        <label asp-for="StartTime"></label>
+        <input class="form-control" asp-for="StartTime" type="time" />
+        <span asp-validation-for="StartTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EndTime"></label>
+        <input class="form-control" asp-for="EndTime" type="time" />
+        <span asp-validation-for="EndTime" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Notes"></label>
+        <textarea class="form-control" asp-for="Notes"></textarea>
+    </div>
+    <input type="submit" class="btn" />
+
+</form>

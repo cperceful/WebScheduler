@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WebScheduler.Models.StaffViewModels
 {
-    public class AddEditRequestOffViewModel
+    public class AddRequestOffViewModel
     {
         [Required]
         [Remote("ValidateRequestOff", "Staff")]

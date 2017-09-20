@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,13 +8,14 @@ using System.Threading.Tasks;
 
 namespace WebScheduler.Models.AdminViewModels
 {
-    public class AddEditShiftViewModel
+    public class AddShiftViewModel
     {
         [Required]
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
         [Required]
+        [Remote("ValidateShiftDay", "Admin", AdditionalFields = "ScheduleId")]
         public DayOfWeek Day { get; set; }
 
         [Required]
@@ -28,10 +30,11 @@ namespace WebScheduler.Models.AdminViewModels
 
         public List<Shift> Shifts { get; set; }
 
-        public AddEditShiftViewModel(IEnumerable<ApplicationUser> users, IEnumerable<Shift> shifts)
+        public AddShiftViewModel(IEnumerable<ApplicationUser> users, IEnumerable<Shift> shifts, int scheduleId)
         {
             Users = new List<SelectListItem>();
             Shifts = new List<Shift>(shifts);
+            ScheduleId = scheduleId;
 
             foreach (ApplicationUser user in users)
             {
@@ -48,7 +51,7 @@ namespace WebScheduler.Models.AdminViewModels
 
         }
 
-        public AddEditShiftViewModel() { }
+        public AddShiftViewModel() { }
 
         
     }

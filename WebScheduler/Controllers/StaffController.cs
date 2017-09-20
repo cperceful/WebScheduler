@@ -75,7 +75,7 @@ namespace WebScheduler.Controllers
         [HttpGet]
         public IActionResult RequestOff()
         {
-            AddEditRequestOffViewModel model = new AddEditRequestOffViewModel();
+            AddRequestOffViewModel model = new AddRequestOffViewModel();
 
             IList<RequestOff> requestsOff = context.RequestsOff.Include(x => x.ApplicationUser).Where(x => x.ApplicationUserId == userManager.GetUserId(User)).ToList();
             ViewBag.requestsOff = requestsOff;
@@ -84,7 +84,7 @@ namespace WebScheduler.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RequestOff(AddEditRequestOffViewModel model)
+        public async Task<IActionResult> RequestOff(AddRequestOffViewModel model)
         {
             ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
 
@@ -107,6 +107,39 @@ namespace WebScheduler.Controllers
             context.SaveChanges();
 
             return Redirect("/staff/requestoff");
+        }
+
+        [HttpGet]
+        [Route("staff/editrequestoff/{id}")]
+        public IActionResult EditRequestOff(int id)
+        {
+            RequestOff requestOff = context.RequestsOff.Single(x => x.ID == id);
+            ViewBag.requestOff = requestOff;
+            EditRequestOffViewModel model = new EditRequestOffViewModel
+            {
+                StartTime = requestOff.StartTime,
+                EndTime = requestOff.EndTime,
+                Notes = requestOff.Notes
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("staff/editrequestoff/{id}")]
+        public IActionResult EditRequestOff(int id, EditRequestOffViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            RequestOff requestOff = context.RequestsOff.Single(x => x.ID == id);
+            requestOff.StartTime = model.StartTime;
+            requestOff.EndTime = model.EndTime;
+            requestOff.Notes = model.Notes;
+            context.SaveChanges();
+
+            return RedirectToAction("requestoff");
         }
 
         public IActionResult Schedules()

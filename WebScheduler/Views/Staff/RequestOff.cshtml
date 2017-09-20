@@ -1,6 +1,6 @@
 ﻿@using WebScheduler.Models
 @using WebScheduler.Models.StaffViewModels
-@model AddEditRequestOffViewModel
+@model AddRequestOffViewModel
 
 @{ ViewBag.Title = "Request Off"; }
 
@@ -26,6 +26,7 @@
                 <td>@requestOff.StartTime.ToString("hh:mm tt")</td>
                 <td>@requestOff.EndTime.ToString("hh:mm tt")</td>
                 <td>@requestOff.Notes</td>
+                <td><a asp-controller="staff" asp-action="editrequestoff" asp-route-id="@requestOff.ID">Edit</a></td>
             </tr>         
 
         }
