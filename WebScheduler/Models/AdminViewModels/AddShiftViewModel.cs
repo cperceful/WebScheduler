@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 
 namespace WebScheduler.Models.AdminViewModels
 {
+    
     public class AddShiftViewModel
     {
         [Required]
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
-        [Required]
         [Remote("ValidateShiftDay", "Admin", AdditionalFields = "ScheduleId")]
+        [Required]
         public DayOfWeek Day { get; set; }
 
         [Required]
@@ -24,13 +25,14 @@ namespace WebScheduler.Models.AdminViewModels
         [Required]
         public DateTime EndTime { get; set; }
 
+        [Remote("ValidateShiftDay", "Admin", AdditionalFields = "Day")]
         public int ScheduleId { get; set; }
 
         public List<SelectListItem> Users { get; set; }
 
         public List<Shift> Shifts { get; set; }
 
-        public AddShiftViewModel(IEnumerable<ApplicationUser> users, IEnumerable<Shift> shifts, int scheduleId)
+        public AddShiftViewModel(IEnumerable<ApplicationUser> users, IEnumerable<Shift> shifts, int scheduleId) : this()
         {
             Users = new List<SelectListItem>();
             Shifts = new List<Shift>(shifts);
@@ -52,6 +54,7 @@ namespace WebScheduler.Models.AdminViewModels
         }
 
         public AddShiftViewModel() { }
+        
 
         
     }
