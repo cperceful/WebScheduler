@@ -14,5 +14,13 @@ namespace WebScheduler.Models.AdminViewModels
         [Required]
         public DateTime EndTime { get; set; }
 
+        public int ShiftId { get; set; }
+
+        public ApplicationUser User { get; set; }
+
+        public DayOfWeek Day { get; set; }
+
+        public int ScheduleId { get; set; }
+
     }
 }

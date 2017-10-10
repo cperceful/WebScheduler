@@ -178,13 +178,35 @@ namespace WebScheduler.Controllers
         [Route("admin/editshift/{id}")]
         public IActionResult EditShift(int id)
         {
-            Shift shift = context.Shifts.Single(x => x.ID == id);
+            Shift shift = context.Shifts.Include(x => x.User).Include(x => x.Schedule).Single(x => x.ID == id);
+            
             EditShiftViewModel model = new EditShiftViewModel
             {
                 StartTime = shift.StartTime,
-                EndTime = shift.EndTime
+                EndTime = shift.EndTime,
+                ShiftId = shift.ID,
+                User = shift.User,
+                Day = shift.Day,
+                ScheduleId = shift.ScheduleID
             };
             return View(model);
+        }
+
+        [HttpPost]
+        [Route("admin/editshift/{id}")]
+        public IActionResult EditShift(EditShiftViewModel model)
+        {
+            Shift shift = context.Shifts.Include(x => x.Schedule).Single(x => x.ID == model.ShiftId);
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            shift.StartTime = model.StartTime;
+            shift.EndTime = model.EndTime;
+            context.SaveChanges();
+
+            return Redirect($"/admin/editschedule/{shift.ScheduleID}");
         }
 
         [HttpPost]

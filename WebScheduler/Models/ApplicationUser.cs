@@ -21,19 +21,21 @@ namespace WebScheduler.Models
 
         public bool IsActive { get; set; }
 
-        public Shift GetShift(DayOfWeek day, int id)
+        public string GetShift(DayOfWeek day, int id)
         {
             Shift shift;
+            string value;
 
             try
             {
                 shift = Shifts.Single(x => x.Day == day && x.ScheduleID == id);
+                value = $"<a href='/admin/editshift/{shift.ID}'>{shift.ToString()}</a>";
             } catch (Exception ex) when (ex is ArgumentNullException || ex is InvalidOperationException)
             {
-                shift = null;
+                value = null;
             }
 
-            return shift;
+            return value;
             
         }
 

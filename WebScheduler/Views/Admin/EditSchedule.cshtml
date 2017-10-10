@@ -26,13 +26,13 @@
                 {
                     <tr>
                         <td>@user.Name</td>
-                        <td>@user.GetShift(DayOfWeek.Sunday, ViewBag.schedule.ID)</td>
-                        <td>@user.GetShift(DayOfWeek.Monday, ViewBag.schedule.ID)</td>
-                        <td>@user.GetShift(DayOfWeek.Tuesday, ViewBag.schedule.ID)</td>
-                        <td>@user.GetShift(DayOfWeek.Wednesday, ViewBag.schedule.ID)</td>
-                        <td>@user.GetShift(DayOfWeek.Thursday, ViewBag.schedule.ID)</td>
-                        <td>@user.GetShift(DayOfWeek.Friday, ViewBag.schedule.ID)</td>
-                        <td>@user.GetShift(DayOfWeek.Saturday, ViewBag.schedule.ID)</td>
+                        <td>@Html.Raw(@user.GetShift(DayOfWeek.Sunday, ViewBag.schedule.ID))</td>
+                        <td>@Html.Raw(@user.GetShift(DayOfWeek.Monday, ViewBag.schedule.ID))</td>
+                        <td>@Html.Raw(@user.GetShift(DayOfWeek.Tuesday, ViewBag.schedule.ID))</td>
+                        <td>@Html.Raw(@user.GetShift(DayOfWeek.Wednesday, ViewBag.schedule.ID))</td>
+                        <td>@Html.Raw(@user.GetShift(DayOfWeek.Thursday, ViewBag.schedule.ID))</td>
+                        <td>@Html.Raw(@user.GetShift(DayOfWeek.Friday, ViewBag.schedule.ID))</td>
+                        <td>@Html.Raw(@user.GetShift(DayOfWeek.Saturday, ViewBag.schedule.ID))</td>
                     
                     </tr>
                 }
@@ -54,11 +54,11 @@
             <span class="text-danger" asp-validation-for="Day"></span>
         </div>
         <div class="form-group">
-            <input class="form-control" asp-for="StartTime" type="time" min="09:00:00" max="22:00:00" />
+            <input class="form-control" asp-for="StartTime" type="time" />
             <span class="text-danger" asp-validation-for="StartTime"></span>
         </div>
         <div class="form-group">
-            <input class="form-control" asp-for="EndTime" type="time" min="09:00:00" max="22:00:00" />
+            <input class="form-control" asp-for="EndTime" type="time" />
             <span class="text-danger" asp-validation-for="EndTime"></span>
         </div>
         <input type="hidden" asp-for="ScheduleId" value="@ViewBag.schedule.ID" />
