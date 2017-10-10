@@ -68,4 +68,18 @@
     </form>
 </div>
 
+@if (ViewBag.schedule.IsPosted)
+{
+    <form asp-controller="admin" asp-action="unpostschedule" asp-route-id="@ViewBag.schedule.ID" method="post">
+        <div class="form-group"><input class="btn" type="submit" value="Unpost Schedule" /></div>
+    </form>
+
+}
+else
+{
+    <form asp-controller="admin" asp-action="postschedule" asp-route-id="@ViewBag.schedule.ID" method="post">
+        <div class="form-group"><input class="btn" type="submit" value="Post Schedule" /></div>
+    </form>
+
+}
 <a asp-controller="admin" asp-action="delete" asp-route-id="@ViewBag.schedule.ID">Delete Schedule</a>

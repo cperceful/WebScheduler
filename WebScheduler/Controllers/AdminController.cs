@@ -66,7 +66,8 @@ namespace WebScheduler.Controllers
             }
             Schedule newSchedule = new Schedule
             {
-                StartDate = model.StartDate
+                StartDate = model.StartDate,
+                IsPosted = false
             };
 
             context.Schedules.Add(newSchedule);
@@ -173,6 +174,40 @@ namespace WebScheduler.Controllers
             return RedirectToAction("viewschedules");
         }
 
+        [HttpGet]
+        [Route("admin/editshift/{id}")]
+        public IActionResult EditShift(int id)
+        {
+            Shift shift = context.Shifts.Single(x => x.ID == id);
+            EditShiftViewModel model = new EditShiftViewModel
+            {
+                StartTime = shift.StartTime,
+                EndTime = shift.EndTime
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("admin/postschedule/{id}")]
+        public IActionResult PostSchedule(int id)
+        {
+            Schedule schedule = context.Schedules.Single(x => x.ID == id);
+            schedule.IsPosted = true;
+            context.SaveChanges();
+            return RedirectToAction("viewschedules");
+        }
+
+        [HttpPost]
+        [Route("admin/unpostschedule/{id}")]
+        public IActionResult UnpostSchedule(int id)
+        {
+            Schedule schedule = context.Schedules.Single(x => x.ID == id);
+            schedule.IsPosted = false;
+            context.SaveChanges();
+            return RedirectToAction("EditSchedule", routeValues: id);
+        }
+
+        //Remote validation methods
         public IActionResult ValidateStartDate(DateTime startDate)
         {
             return Json(CheckDate(startDate) ? "true" : $"A schedule with the start date {startDate.ToString("D")} already exists");

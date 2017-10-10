@@ -14,5 +14,7 @@ namespace WebScheduler.Models
 
         public IList<Shift> Shifts { get; set; }
 
+        public bool IsPosted { get; set; }
+
     }
 }

@@ -7,6 +7,9 @@
 
 @foreach (Schedule schedule in Model)
 {
-    <a asp-controller="staff" asp-action="viewschedule" asp-route-id="@schedule.ID">@schedule.StartDate.Month/@schedule.StartDate.Day/@schedule.StartDate.Year</a>
-    <br />
+    if (schedule.IsPosted)
+    {
+        <a asp-controller="staff" asp-action="viewschedule" asp-route-id="@schedule.ID">@schedule.StartDate.Month/@schedule.StartDate.Day/@schedule.StartDate.Year</a>
+        <br />
+    }
 }
