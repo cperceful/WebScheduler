@@ -18,3 +18,8 @@
     <input type="hidden" asp-for="ScheduleId" />
     <input type="submit" value="Save Changes" class="btn" />
 </form>
+
+<form asp-controller="admin" asp-action="deleteshift" asp-route-id="@Model.ShiftId" method="post">
+    <input type="hidden" asp-for="ScheduleId" />
+    <input type="submit" class="btn-danger" value="Delete Shift" />
+</form>

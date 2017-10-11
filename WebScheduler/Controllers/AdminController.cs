@@ -229,6 +229,17 @@ namespace WebScheduler.Controllers
             return RedirectToAction("EditSchedule", routeValues: id);
         }
 
+        [HttpPost]
+        [Route("admin/deleteshift/{id}")]
+        public IActionResult DeleteShift(int id, EditShiftViewModel model)
+        {
+            Shift shift = context.Shifts.Single(x => x.ID == id);
+            context.Remove(shift);
+            context.SaveChanges();
+
+            return Redirect($"/admin/editschedule/{model.ScheduleId}");
+        }
+
         //Remote validation methods
         public IActionResult ValidateStartDate(DateTime startDate)
         {

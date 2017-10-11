@@ -13,6 +13,8 @@ using WebScheduler.Data;
 using WebScheduler.Models;
 using WebScheduler.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace WebScheduler
 {
@@ -60,6 +62,12 @@ namespace WebScheduler
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            //Require HTTPS globally
+            //services.Configure<MvcOptions>(options =>
+            //{
+            //    options.Filters.Add(new RequireHttpsAttribute());
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +75,9 @@ namespace WebScheduler
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            //Redirect all HTTP to HTTPS
+            
 
             if (env.IsDevelopment())
             {
