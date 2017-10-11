@@ -247,15 +247,15 @@ namespace WebScheduler.Controllers
             return true;
         }
 
-        public async Task<IActionResult> ValidateShiftDay(DayOfWeek day, int ScheduleId)
+        public async Task<IActionResult> ValidateShiftDay(DayOfWeek day, int ScheduleId, string UserId)
         {
-            ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
-            return Json(await CheckShiftDay(day, ScheduleId) ? "true" : $"{user.Name} already has a shift for {day} on this schedule. Edit it if you need to change times");
+            ApplicationUser user = await userManager.FindByIdAsync(UserId);
+            return Json(await CheckShiftDay(day, ScheduleId, UserId) ? "true" : $"{user.Name} already has a shift for {day} on this schedule. Edit it if you need to change times");
         }
 
-        public async Task<bool> CheckShiftDay(DayOfWeek day, int scheduleId)
+        public async Task<bool> CheckShiftDay(DayOfWeek day, int scheduleId, string UserId)
         {
-            ApplicationUser user = await userManager.FindByNameAsync(User.Identity.Name);
+            ApplicationUser user = await userManager.FindByIdAsync(UserId);
 
             foreach (Shift shift in context.Shifts.Where(x => x.User == user && x.ScheduleID == scheduleId).ToList())
             {

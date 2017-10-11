@@ -15,7 +15,7 @@ namespace WebScheduler.Models.AdminViewModels
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
 
-        [Remote("ValidateShiftDay", "Admin", AdditionalFields = "ScheduleId")]
+        [Remote("ValidateShiftDay", "Admin", AdditionalFields = "ScheduleId,UserId")]
         [Required]
         public DayOfWeek Day { get; set; }
 
@@ -25,7 +25,6 @@ namespace WebScheduler.Models.AdminViewModels
         [Required]
         public DateTime EndTime { get; set; }
 
-        [Remote("ValidateShiftDay", "Admin", AdditionalFields = "Day")]
         public int ScheduleId { get; set; }
 
         public List<SelectListItem> Users { get; set; }
