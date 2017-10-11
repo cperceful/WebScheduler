@@ -16,7 +16,7 @@ namespace WebScheduler.Models.AccountViewModels
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Password", Description = "Password must be 6 characters in length and must contain at least 1 number, 1 uppercase letter, and 1 lowercase letter")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]

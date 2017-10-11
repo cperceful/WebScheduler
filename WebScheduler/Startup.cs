@@ -44,7 +44,14 @@ namespace WebScheduler
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+                options.Password.RequiredLength = 6;
+            })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -111,7 +118,9 @@ namespace WebScheduler
             ApplicationUser admin = new ApplicationUser
             {
                 UserName = Configuration["AppSettings:Username"],
-                Email = Configuration["AppSettings:UserEmail"]
+                Email = Configuration["AppSettings:UserEmail"],
+                Name = "Admin",
+                IsActive = true
             };
 
             //Password for admin account to be used if not already created
