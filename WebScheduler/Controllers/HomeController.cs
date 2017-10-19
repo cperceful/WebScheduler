@@ -47,7 +47,7 @@ namespace WebScheduler.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Developed by Cameron Perceful";
 
             return View();
         }
