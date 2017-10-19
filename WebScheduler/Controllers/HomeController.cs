@@ -40,7 +40,7 @@ namespace WebScheduler.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "WebScheduler is an ASP.Net Core webapp utilizing the ASP.Net Identity framework";
 
             return View();
         }
