@@ -151,6 +151,54 @@ namespace WebScheduler
                     
                 }
             }
+
+            ApplicationUser test1 = new ApplicationUser
+            {
+                Email = "test1@test.com",
+                Name = "Test1",
+                IsActive = true,
+                UserName = "test1@test.com"
+            };
+
+            ApplicationUser test2 = new ApplicationUser
+            {
+                Email = "test2@test.com",
+                Name = "Test2",
+                IsActive = true,
+                UserName = "test2@test.com"
+            };
+
+            ApplicationUser test3 = new ApplicationUser
+            {
+                Email = "test3@test.com",
+                Name = "Test3",
+                IsActive = true,
+                UserName = "test3@test.com"
+            };
+
+            //test user generation
+
+            async Task TestUsers(ApplicationUser testUser)
+            {
+                string testPassword = "testing";
+
+                ApplicationUser findUser = await UserManager.FindByEmailAsync(testUser.Email);
+
+                if (findUser == null)
+                {
+                    IdentityResult createUser = await UserManager.CreateAsync(testUser, testPassword);
+
+                    if (createUser.Succeeded)
+                    {
+                        await UserManager.AddToRoleAsync(testUser, "Staff");
+                    }
+                }
+
+            }
+
+            await TestUsers(test1);
+            await TestUsers(test2);
+            await TestUsers(test3);
         }
     }
 
